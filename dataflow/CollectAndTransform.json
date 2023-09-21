@@ -61,7 +61,11 @@
 					}
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "SCD"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          DateID as integer,",
@@ -89,6 +93,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> Weather",
+				"Region alterRow(upsertIf(1 == 1)) ~> SCD",
 				"date sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -98,7 +103,7 @@
 				"     partitionFileNames:['CleanedDate'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> CleanedDate",
-				"Region sink(allowSchemaDrift: true,",
+				"SCD sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['CleanedRegion'],",
 				"     skipDuplicateMapInputs: true,",
