@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "\n-- Add the primary key constraint 'DateID'\nALTER TABLE DimDate\nADD CONSTRAINT PK_DimDate PRIMARY KEY NONCLUSTERED (DateID) NOT ENFORCED;\n\n\n-- Add the primary key constraint 'RegionID'\nALTER TABLE DimRegion\nADD CONSTRAINT PK_DimRegion PRIMARY KEY NONCLUSTERED (RegionID) NOT ENFORCED;\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sp_villeFuture",
+				"poolName": "sp_villeFuture"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

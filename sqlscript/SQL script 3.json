@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 3",
+	"properties": {
+		"content": {
+			"query": "CREATE USER [odbAdmin]\n\tWITHOUT LOGIN\n\tWITH DEFAULT_SCHEMA = dbo\n\nGO\n\nGRANT CONNECT TO [odbAdmin]\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sp_villeFuture",
+				"poolName": "sp_villeFuture"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

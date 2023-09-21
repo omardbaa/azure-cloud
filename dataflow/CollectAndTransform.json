@@ -1,0 +1,122 @@
+{
+	"name": "CollectAndTransform",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "date",
+						"type": "DatasetReference"
+					},
+					"name": "date"
+				},
+				{
+					"dataset": {
+						"referenceName": "Region",
+						"type": "DatasetReference"
+					},
+					"name": "Region"
+				},
+				{
+					"dataset": {
+						"referenceName": "Weather",
+						"type": "DatasetReference"
+					},
+					"name": "Weather"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "CleanedDate",
+						"type": "DatasetReference"
+					},
+					"name": "CleanedDate",
+					"rejectedDataLinkedService": {
+						"referenceName": "omardbAzureBlobStorage",
+						"type": "LinkedServiceReference"
+					}
+				},
+				{
+					"dataset": {
+						"referenceName": "CleanedRegion",
+						"type": "DatasetReference"
+					},
+					"name": "CleanedRegion",
+					"rejectedDataLinkedService": {
+						"referenceName": "omardbAzureBlobStorage",
+						"type": "LinkedServiceReference"
+					}
+				},
+				{
+					"dataset": {
+						"referenceName": "CleanedWeatherMetrics",
+						"type": "DatasetReference"
+					},
+					"name": "CleanedWeatherMetrics",
+					"rejectedDataLinkedService": {
+						"referenceName": "omardbAzureBlobStorage",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          DateID as integer,",
+				"          Date as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> date",
+				"source(output(",
+				"          RegionID as integer,",
+				"          RegionName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Region",
+				"source(output(",
+				"          DateID as string,",
+				"          RegionID as string,",
+				"          AverageTemperature as string,",
+				"          Humidity as string,",
+				"          WindSpeed as string,",
+				"          Rainfall as string,",
+				"          SunshineHours as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Weather",
+				"date sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          DateID as string,",
+				"          Date as string",
+				"     ),",
+				"     partitionFileNames:['CleanedDate'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CleanedDate",
+				"Region sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['CleanedRegion'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CleanedRegion",
+				"Weather sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          DateID as string,",
+				"          RegionID as string,",
+				"          AverageTemperature as string,",
+				"          Humidity as string,",
+				"          WindSpeed as string,",
+				"          Rainfall as string,",
+				"          SunshineHours as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CleanedWeatherMetrics"
+			]
+		}
+	}
+}

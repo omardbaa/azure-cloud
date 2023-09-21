@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 2",
+	"properties": {
+		"content": {
+			"query": "",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sp_villeFuture",
+				"poolName": "sp_villeFuture"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
